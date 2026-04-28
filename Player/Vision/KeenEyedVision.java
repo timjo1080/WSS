@@ -1,4 +1,7 @@
 package Player.Vision;
-public class KeenEyedVision {
-    
+public class KeenEyedVision extends Vision {
+
+    public KeenEyedVision() {
+        super();
+    }
 }

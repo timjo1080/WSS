@@ -1,4 +1,7 @@
 package Player.Vision;
-public class CautiousVision {
-    
+public class CautiousVision extends Vision {
+
+    public CautiousVision() {
+        super();
+    }
 }
