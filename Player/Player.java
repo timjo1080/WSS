@@ -1,4 +1,7 @@
 package Player;
+import Items.Trader.Offer;
+import Player.Vision.Vision;
+
 public class Player {
     private String name;
     private int maxStrength;
