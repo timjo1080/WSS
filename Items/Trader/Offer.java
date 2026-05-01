@@ -43,4 +43,9 @@ public class Offer {
         return foodRequested;
     }
 
+    public String toString() {
+        return "Offer: " + goldOffered + " gold, " + waterOffered + " water, " + foodOffered + " food, in exchange for " +
+               goldRequested + " gold, " + waterRequested + " water, " + foodRequested + " food.";
+    }
+
 }
