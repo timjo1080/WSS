@@ -8,15 +8,31 @@ public class Trader extends Item {
     }
 
     public Offer counterOffer(Offer offer) {
-        // TODO
-        return null;
-    }
+        
+        return new Offer(
+            offer.getGoldOffered(),
+            offer.getWaterOffered(),
+            offer.getFoodOffered(),
+            offer.getGoldRequested(),
+            offer.getWaterRequested(),
+            offer.getFoodRequested()
 
+        );
+    }
+// will add more when we have resources sorted
     public void acceptOffer(Offer offer) {
-        // TODO
+        System.out.println(getClass().getSimpleName() + " accepts the offer: " +
+            offer.getGoldOffered() + " gold, " +
+            offer.getWaterOffered() + " water, " +
+            offer.getFoodOffered() + " food, in exchange for " +
+            offer.getGoldRequested() + " gold, " +
+            offer.getWaterRequested() + " water, " + 
+            offer.getFoodRequested() + " food." 
+        );
     }
 
     public void declineOffer() {
-        // TODO
+        System.out.println(getClass().getSimpleName() + " declines the offer.");
+
     }
 }
