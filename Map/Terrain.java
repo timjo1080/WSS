@@ -1,4 +1,5 @@
 package Map;
+
 public class Terrain {
     private String terrainType;
     private int movementCost;
@@ -13,11 +14,24 @@ public class Terrain {
     }
 
     public void subtractValue(int amount, String type) {
-        // TODO
+        switch (type) {
+            case "movement":
+                movementCost -= amount;
+                break;
+            case "water":
+                waterCost -= amount;
+                break;
+            case "food":
+                foodCost -= amount;
+                break;
+        }
     }
 
     public boolean checkValues() {
-        // TODO
-        return false;
+        return movementCost >= 0 && waterCost >= 0 && foodCost >= 0;
+    }
+
+    public String getTerrainType() {
+        return terrainType;
     }
 }
