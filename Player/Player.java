@@ -7,6 +7,7 @@ public class Player {
     private int maxStrength;
     private int maxWater;
     private int maxFood;
+    private int currentFood;
     private int currentStrength;
     private int currentWater;
     private int currentGold;
@@ -17,7 +18,7 @@ public class Player {
     private int positionY;
 
     public Player(String name, int maxStrength, int maxWater, int maxFood,
-                  int currentStrength, int currentWater, int currentGold,
+                  int currentStrength, int currentWater, int currentFood, int currentGold,
                   Vision vision, Brain brain,
                   int movementPts, int positionX, int positionY) {
         this.name = name;
@@ -27,6 +28,7 @@ public class Player {
         this.currentStrength = currentStrength;
         this.currentWater = currentWater;
         this.currentGold = currentGold;
+        this.currentFood = currentFood;
         this.vision = vision;
         this.brain = brain;
         this.movementPts = movementPts;
@@ -52,5 +54,29 @@ public class Player {
 
     public void rejectTrade() {
         // TODO
+    }
+    
+    public void addFood(int amount) {
+        currentFood += amount;
+        if (currentFood > maxFood) {
+            currentFood = maxFood;
+        }
+        System.out.println("Food is now: " + currentFood);
+    }
+
+    public void addGold(int amount) {
+        currentGold += amount;
+        if (currentGold < 0) {
+            currentGold = 0;
+        }
+        System.out.println("Gold is now: " + currentGold);
+    }
+
+    public void addWater(int amount) {
+        currentWater += amount;
+        if (currentWater > maxWater) {
+            currentWater = maxWater;
+        }
+        System.out.println("Water is now: " + currentWater);
     }
 }

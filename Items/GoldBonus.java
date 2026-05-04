@@ -1,4 +1,7 @@
 package Items;
+
+import Player.Player;
+
 public class GoldBonus extends Item {
     private int quantity;
 
@@ -7,7 +10,8 @@ public class GoldBonus extends Item {
         this.quantity = quantity;
     }
 
-    public void addGold() {
-        // TODO
+    public void addGold(Player player) {
+        player.addGold(quantity);
+        System.out.println("Gained " + quantity + " gold! ");
     }
 }

@@ -1,6 +1,10 @@
 package Items;
 import Items.Trader.*;
 
+//Use to compile
+//javac Items/*.java Items/Trader/*.java Player/*.java Player/Vision/*.java
+//Use to run
+//java Items.TestTrader
 
 public class TestTrader {
     public static void main(String[] args) {

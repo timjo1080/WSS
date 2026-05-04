@@ -1,4 +1,7 @@
 package Items;
+
+import Player.Player;
+
 public class FoodBonus extends Item {
     private int quantity;
 
@@ -7,7 +10,8 @@ public class FoodBonus extends Item {
         this.quantity = quantity;
     }
 
-    public void addFood() {
-        // TODO
+    public void addFood(Player player) {
+        player.addFood(quantity);
+        System.out.println("Gained " + quantity + " food! ");
     }
 }
