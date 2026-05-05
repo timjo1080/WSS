@@ -3,9 +3,11 @@ package Items.Trader;
 public class AngryTrader extends Trader {
     private int counterLimit;
     private int currentCounter;
+
     //Notes
 //right now it starts with a counter of 0 but 
 //we could make it so a random trader is generated already angry
+
     public AngryTrader(String name, boolean isRepeating, int counterLimit, int currentCounter) {
         super(name, isRepeating);
         this.counterLimit = counterLimit;

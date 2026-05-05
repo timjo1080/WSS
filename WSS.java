@@ -1,5 +1,8 @@
 import Map.Map;
 import Player.Player;
+import java.util.Scanner;
+import Items.Trader.*;
+
 
 public class WSS
 {
@@ -15,14 +18,23 @@ public class WSS
     
     //methods
     public void startGame() {
+         System.out.println("Game started!");
 
-    }
+        if (player == null) {
+        System.out.println("No player yet.");
+        return;
+        }
+
+        displayStatus();
+
+        }
 
     public void resetGame() {
 
     }
 
     public void displayStatus() {
+        System.out.println("Displaying player status...");
 
     }
 
@@ -36,6 +48,15 @@ public class WSS
 
     public void initializePlayer() {
 
+    }
+
+    public static void main(String[] args) {
+    System.out.println("Starting WSS game...");
+
+    Player player = new Player("Test", 100, 100, 100, 50, 50, 20, 10, null, null, 10, 0 ,0); // temporary until Player is finished
+
+    WSS game = new WSS(10, 10, "normal", player);
+    game.startGame();
     }
 
 }

@@ -12,6 +12,8 @@ public class GenerousTrader extends Trader {
         int newWaterRequested = Math.max(0, offer.getWaterRequested() - generosityLevel);
         int newFoodRequested = Math.max(0, offer.getFoodRequested() - generosityLevel);
 
+
+//new offered reduced by generosity level
         return new Offer(
             offer.getGoldOffered(),
             offer.getWaterOffered(),
