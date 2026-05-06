@@ -1,5 +1,6 @@
 package Map;
 import Items.Item;
+
 import java.util.ArrayList;
 
 public class Square {
@@ -37,5 +38,30 @@ public class Square {
 
     public boolean removeItem(Item item) {
         return items.remove(item);
+    }
+
+    public void applyItems(Player.Player player) {
+        ArrayList<Item> itemsToRemove = new ArrayList<>();
+
+        for (Item item : items) {
+            item.applyEffect(player, item, this);
+            if (!item.isRepeating()) {
+                itemsToRemove.add(item);
+            }
+        }
+
+        items.removeAll(itemsToRemove);
+    }
+
+    public static int getGoldValue() {
+        return 10;
+    }
+
+     public static int getWaterValue() {
+        return 10;
+    }
+
+    public static int getFoodValue() {
+        return 10;
     }
 }
