@@ -47,10 +47,10 @@ public class Player {
         int newY = positionY;
         
         if (direction.equalsIgnoreCase("up")) {
-            newY += 1;
+            newY -= 1;
         }
         else if (direction.equalsIgnoreCase("down")){
-            newY -= 1;
+            newY += 1;
         }
         else if (direction.equalsIgnoreCase("left")){
             newX -= 1;
@@ -164,6 +164,16 @@ public class Player {
 
     public int getCurrentMovementPts() {
         return movementPts;
+
+    }
+
+    public int getCurrentX() {
+        return positionX;
+
+    }
+
+    public int getCurrentY() {
+        return positionY;
 
     }
     

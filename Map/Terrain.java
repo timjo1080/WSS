@@ -34,4 +34,16 @@ public class Terrain {
     public String getTerrainType() {
         return terrainType;
     }
+
+    public int getTerrainMovementCost() {
+        return movementCost;
+    }
+
+    public int getTerrainWaterCost() {
+        return waterCost;
+    }
+
+    public int getTerrainFoodCost() {
+        return foodCost;
+    }
 }

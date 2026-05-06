@@ -69,6 +69,15 @@ public class Map {
         return x >= 0 && x < width && y >= 0 && y < height;
     }
 
+    public int getMapWidth() {
+        return width;
+    }
+
+    public int getMapHeight() {
+        return width;
+    }
+
+
     public Square getSquareAt(int x, int y) {
         if (!isValidCoordinate(x, y)) {
             return null;

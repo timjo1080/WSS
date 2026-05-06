@@ -7,16 +7,15 @@ public class Path {
     private int foodCost;
     private ArrayList<String> moves;
 
-    public Path(int movementCost, int waterCost, int foodCost) {
+    public Path(int movementCost, int waterCost, int foodCost, ArrayList<String> moves) {
         this.movementCost = movementCost;
         this.waterCost = waterCost;
         this.foodCost = foodCost;
-        this.moves = new ArrayList<>();
+        this.moves = moves;
     }
 
     public ArrayList<String> totalPath() {
-        // TODO
-        return null;
+        return moves;
     }
 
     public ArrayList<Integer> totalCost() {
