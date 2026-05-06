@@ -1,5 +1,6 @@
 package Player;
 import Items.Trader.Offer;
+import Player.Brain.Brain;
 import Player.Vision.Vision;
 
 public class Player {
@@ -158,6 +159,11 @@ public class Player {
 
     public int getCurrentGold() {
         return currentGold;
+
+    }
+
+    public int getCurrentMovementPts() {
+        return movementPts;
 
     }
     

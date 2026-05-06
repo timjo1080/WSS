@@ -1,7 +1,7 @@
 package Player;
 
 import Player.Player;
-import Player.Brain;
+import Player.Brain.Brain;
 import Player.Vision.Vision;
 
 
