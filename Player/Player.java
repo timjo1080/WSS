@@ -204,4 +204,8 @@ public class Player {
         // TODO Auto-generated method stub
         return brain;
     }
+
+    public int getPositionX() {
+        return positionX;
+    }
 }

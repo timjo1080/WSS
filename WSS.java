@@ -34,8 +34,8 @@ public class WSS
         this.map = new Map(width, height, difficulty);
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void initializePlayer(String difficulty) {
+
     }
 
     //methods
@@ -94,11 +94,13 @@ public class WSS
         
         System.out.println("\nIntializing Map...");
         initializeMap(width, height, difficulty);
+        map.createMap();
         System.out.println("Initalizing Player...\n\n");
-        initializePlayer();
+        initializePlayer(difficulty);
 
         while(checkWinOrLose().equals("ongoing"))
         {
+            displayStatus();
             makeNextMove();
         }
         if(checkWinOrLose().equals("win"))
@@ -109,16 +111,8 @@ public class WSS
         {
             System.out.println("The player did not make it to the end.\n\n");
         }
-        // System.out.println("Game started!");
 
-        // if (player == null) {
-        // System.out.println("No player yet.");
-        // return;
-        // }
-
-        // displayStatus();
-
-        }
+    }
 
     public void makeNextMove()
     {
@@ -126,15 +120,19 @@ public class WSS
     }
 
     public void displayStatus() {
-        System.out.println("Displaying player status...");
-
+        System.out.println("Displaying map and player status...\n");
+        map.displayMap();
+        System.out.println("\n\n");
+        player.displayStatus();
     }
 
     public String checkWinOrLose() {
-        return "win"; // placeholder (win, ongoing, lost)
-    }
-
-    public void initializePlayer() {
-
+        if (player.getPositionX() == map.getWidth() - 1) {
+        return "win";
+        }
+        else if () {
+            // no viable path
+        }
+        return "ongoing"; // placeholder (win, ongoing, lost)
     }
 }
