@@ -21,6 +21,10 @@ public class Map {
         this.map = new Square[height][width]; // rows x cols
     }
 
+    public int getWidth() {
+        return width;
+    }
+
     //methods
     public void displayMap() {
         // TODO
@@ -137,4 +141,5 @@ public class Map {
         }
         return map[y][x];
     }
+
 }
