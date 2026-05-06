@@ -1,5 +1,8 @@
 package Items;
+
+import java.util.Scanner;
 import Items.Trader.*;
+import Player.Player;
 
 //Use to compile
 //javac Items/*.java Items/Trader/*.java Player/*.java Player/Vision/*.java
@@ -9,23 +12,50 @@ import Items.Trader.*;
 public class TestTrader {
     public static void main(String[] args) {
 
-        Offer offer = new Offer(10, 2, 1, 5, 3, 2);
+        Scanner scanner = new Scanner(System.in);
 
-        Trader t1 = new GenerousTrader("Nice Guy", true, 2);
-        Trader t2 = new AngryTrader("Mad Guy", true, 2, 0);
-        Trader t3 = new StupidTrader("Weird Guy", true);
+         Player player = new Player(
+            "TestPlayer",
+            100, 100, 100,
+            50, 50, 20, 30,
+            null, null,
+            5, 0, 0
+        );
 
-        System.out.println("Original Offer:");
-        System.out.println(offer);
+        Trader trader = new GenerousTrader("Nice Trader", true, 2);
 
-        System.out.println("\nGenerous Trader:");
-        System.out.println(t1.counterOffer(offer));
+        Offer playerOffer = new Offer(
+            5, 0, 2,  
+            0, 10, 0   
+        );
 
-        System.out.println("\nAngry Trader:");
-        System.out.println(t2.counterOffer(offer));
+        player.proposeTrade(playerOffer);
 
-        System.out.println("\nStupid Trader:");
-        System.out.println(t3.counterOffer(offer));
+        Offer counter = trader.counterOffer(playerOffer);
+
+        if (counter == null) {
+            trader.declineOffer();
+            player.rejectTrade();
+        }
+        else {
+            System.out.println("Trader counters with: ");
+            System.out.println(counter);
+
+            System.out.println("Accept trade? (yes/no)");
+            String choice = scanner.nextLine();
+
+            if (choice.equalsIgnoreCase("yes") || choice.equalsIgnoreCase("y")) {
+                trader.acceptOffer(counter);
+                player.acceptTrade(counter);
+            }
+            else{
+                trader.declineOffer();
+                player.rejectTrade();
+            }
+        }
+
+        player.displayStatus();
+        scanner.close();
     }
     
 }

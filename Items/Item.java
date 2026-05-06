@@ -21,7 +21,15 @@ public class Item {
         // TODO
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public boolean isRepeating() {
+        return isRepeating;
+    }
+
     public void applyEffect(Player player) {
-        // TODO
+        System.out.println(name + " effect applied to " + player.getClass().getSimpleName());
     }
 }

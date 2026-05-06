@@ -1,7 +1,7 @@
 package Items;
 
 import Player.Player;
-import Player.Brain;
+import Player.Brain.Brain;
 import Player.Vision.Vision;
 
 //use to compile

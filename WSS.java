@@ -1,6 +1,8 @@
 import Map.Map;
 import Player.Player;
 import java.util.Scanner;
+import Items.Trader.*;
+
 
 public class WSS
 {
@@ -107,8 +109,16 @@ public class WSS
         {
             System.out.println("The player did not make it to the end.\n\n");
         }
+        // System.out.println("Game started!");
 
-    }
+        // if (player == null) {
+        // System.out.println("No player yet.");
+        // return;
+        // }
+
+        // displayStatus();
+
+        }
 
     public void makeNextMove()
     {
@@ -116,6 +126,7 @@ public class WSS
     }
 
     public void displayStatus() {
+        System.out.println("Displaying player status...");
 
     }
 
@@ -126,5 +137,4 @@ public class WSS
     public void initializePlayer() {
 
     }
-
 }
