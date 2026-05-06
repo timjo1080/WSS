@@ -23,4 +23,16 @@ public class Path {
         // TODO
         return null;
     }
+
+    public int getMovementCost(){
+        return movementCost;
+    }
+
+    public int getWaterCost(){
+        return waterCost;
+    }
+
+    public int getFoodCost(){
+        return movementCost;
+    }
 }
