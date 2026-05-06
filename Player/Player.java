@@ -79,4 +79,9 @@ public class Player {
         }
         System.out.println("Water is now: " + currentWater);
     }
+
+    public Brain getBrain() {
+        // TODO Auto-generated method stub
+        return brain;
+    }
 }
