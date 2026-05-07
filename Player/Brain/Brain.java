@@ -26,7 +26,7 @@ public class Brain {
         //
                 
         for (String move : viablePath.totalPath()){
-            player.move(move, mapWidth, mapHeight); // Currently not sure how to get the width and height as it is right now
+            player.move(move, mapWidth, mapHeight, 1, 1, 1 ); // Currently not sure how to get the width and height as it is right now
         }
     
 

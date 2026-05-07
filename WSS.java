@@ -2,6 +2,7 @@ import Map.Map;
 import Player.Player;
 import java.util.Scanner;
 import Items.Trader.*;
+import Map.Terrain;
 
 
 public class WSS
@@ -9,6 +10,7 @@ public class WSS
     //vars
     private Map map;
     private Player player; 
+    private Scanner scanner = new Scanner(System.in);
 
     public WSS() {
     }
@@ -35,6 +37,41 @@ public class WSS
     }
 
     public void initializePlayer(String difficulty) {
+        int maxStrength = 100;
+        int maxWater = 100;
+        int maxFood = 100;
+
+        int currentStrength;
+        int currentWater;
+        int currentFood;
+        int currentGold;
+
+        if (difficulty.equalsIgnoreCase("Easy")) {
+            currentStrength = 100;
+            currentWater = 100;
+            currentFood = 100;
+            currentGold = 50;
+
+        } 
+        else if (difficulty.equalsIgnoreCase("Medium")) {
+            currentStrength = 75;
+            currentWater = 75;
+            currentFood = 75;
+            currentGold = 25;
+        }
+        else{
+            currentStrength = 50;
+            currentWater = 50;
+            currentFood = 50;
+            currentGold = 10;
+        }
+
+
+        // Can modify the position and movement points
+        this.player = new Player(
+        "Player", maxStrength, maxWater, maxFood, 
+        currentStrength, currentWater, currentFood, currentGold,
+        null, null, 5, 4, 4);
 
     }
 
@@ -116,22 +153,66 @@ public class WSS
 
     public void makeNextMove()
     {
+        if (player.getBrain() == null) {
+            System.out.print("Enter move direction (up/down/left/right/stay):");
+            String direction = scanner.next().toLowerCase();
+
+            if (direction.equals("stay")){
+                player.rest();
+                return;
+            }
+            int newX = player.getPositionX();
+            int newY = player.getPositionY();
+
+            if (direction.equals("up")) {
+                newY -= 1;
+            } else if (direction.equals("down")) {
+                newY += 1;
+            } else if (direction.equals("left")) {
+                newX -= 1;
+            } else if (direction.equals("right")) {
+                newX += 1;
+            }
+            else{
+                System.out.println("Invalid direction brochaco.");
+                return;
+            }
+
+            Terrain terrain = map.getTerrainAt(newX, newY);
+
+            if (terrain == null) {
+                System.out.println("You cannot move off the map.");
+                return;
+            }
+            player.move(direction, map.getWidth(), map.getHeight(), terrain.getMovementCost(), terrain.getWaterCost(), terrain.getFoodCost());
+            return;
+        }
         player.getBrain().makeMove(player);
     }
 
     public void displayStatus() {
         System.out.println("Displaying map and player status...\n");
-        map.displayMap();
+        map.displayMap(player.getPositionX(), player.getPositionY());
         System.out.println("\n\n");
         player.displayStatus();
+    
+
+        Terrain terrain = map.getTerrainAt(player.getPositionX(), player.getPositionY());
+        System.out.println("Current terrain: " + terrain.getTerrainType());        
+
     }
+    
 
     public String checkWinOrLose() {
         if (player.getPositionX() == map.getWidth() - 1) {
         return "win";
         }
-        else if () {
-            // no viable path
+        if (player.getCurrentStrength() <= 0 ||
+            player.getCurrentWater() <= 0 ||
+            player.getCurrentFood() <= 0) {
+            return "lost";
+        
+            
         }
         return "ongoing"; // placeholder (win, ongoing, lost)
     }

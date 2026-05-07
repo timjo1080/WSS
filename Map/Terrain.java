@@ -6,6 +6,25 @@ public class Terrain {
     private int waterCost;
     private int foodCost;
 
+    public String getTerrainType() {
+        return terrainType;
+    }
+    
+    public int getMovementCost() {
+        return movementCost;
+
+    }
+
+    public int getWaterCost() {
+        return waterCost;
+
+    }
+
+    public int getFoodCost() {
+        return foodCost;
+
+    }
+
     public Terrain(String terrainType, int movementCost, int waterCost, int foodCost) {
         this.terrainType = terrainType;
         this.movementCost = movementCost;
@@ -13,7 +32,9 @@ public class Terrain {
         this.foodCost = foodCost;
     }
 
-    public void subtractValue(int amount, String type) {
+    //gonna test something out
+
+    /* public void subtractValue(int amount, String type) {
         switch (type) {
             case "movement":
                 movementCost -= amount;
@@ -21,17 +42,14 @@ public class Terrain {
             case "water":
                 waterCost -= amount;
                 break;
-            case "food":
+      case "food":
                 foodCost -= amount;
                 break;
         }
     }
-
+    */
     public boolean checkValues() {
         return movementCost >= 0 && waterCost >= 0 && foodCost >= 0;
     }
 
-    public String getTerrainType() {
-        return terrainType;
-    }
 }

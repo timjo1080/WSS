@@ -1,10 +1,13 @@
 package Map;
 
+
+
 public class TestMap {
+	
 	public static void main(String[] args) {
 		Map map = new Map(5, 5, "Easy");
 		map.createMap();
-		map.displayMap();
+		map.displayMap(0, 0); 
 		map.displayItemsOnMap();
 		
 		Square square = map.getSquareAt(2, 3);

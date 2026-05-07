@@ -2,6 +2,7 @@ package Player;
 import Items.Trader.Offer;
 import Player.Brain.Brain;
 import Player.Vision.Vision;
+import Map.Terrain;
 
 public class Player {
     private String name;
@@ -37,7 +38,41 @@ public class Player {
         this.positionY = positionY;
     }
 
-    public void move(String direction, int mapWidth, int mapHeight) {
+    public void rejectTrade() {
+        System.out.println(name + " rejected the trade.");
+    }
+
+    public String getName() {
+        return name;
+
+    }
+
+    public int getCurrentFood() {
+        return currentFood;
+
+    }
+
+    public int getCurrentWater() {
+        return currentWater;
+
+    }
+
+    public int getCurrentGold() {
+        return currentGold;
+
+    }
+
+    public int getCurrentMovementPts() {
+        return movementPts;
+
+    }
+
+    public int getCurrentStrength() {
+        return currentStrength;
+    }
+
+
+    public void move(String direction, int mapWidth, int mapHeight, int movementCost, int waterCost, int foodCost) {
         if (movementPts <= 0) {
             System.out.println("No movement points left.");
             return;
@@ -47,10 +82,10 @@ public class Player {
         int newY = positionY;
         
         if (direction.equalsIgnoreCase("up")) {
-            newY += 1;
+            newY -= 1;
         }
         else if (direction.equalsIgnoreCase("down")){
-            newY -= 1;
+            newY += 1;
         }
         else if (direction.equalsIgnoreCase("left")){
             newX -= 1;
@@ -67,14 +102,28 @@ public class Player {
         if (newX < 0 || newX >= mapWidth || newY < 0 || newY >= mapHeight) {
             System.out.println( "You cannot move off the map.");
             return;
-
+        }
+        if (movementPts < movementCost) {
+            System.out.println("Not enough movement points to move, get some rest brochacho.");
+            return;
         }
 
         positionX = newX;
         positionY = newY;
-        movementPts--;
-        currentStrength--;
 
+        movementPts -= 1;
+        currentStrength -= movementCost;
+        currentWater -= waterCost;
+        currentFood -= foodCost;
+
+        if (currentWater < 0) {
+            currentWater = 0;
+        }
+
+        if (currentFood < 0) {
+            currentFood = 0;
+        }
+        
         if (currentStrength < 0) {
             currentStrength = 0;
         }
@@ -84,12 +133,12 @@ public class Player {
 
     }
 
-    public void rest() {
-        currentStrength += 10;
 
-        if (currentStrength > maxStrength) {
-            currentStrength = maxStrength;
-        }
+    //made changes to rest so it aligns with slides
+    //rest adds 2 movement points, but costs 1 food and 1 water
+
+    public void rest() {
+        movementPts += 2;
 
         currentFood -= 1;
         currentWater -= 1;
@@ -102,7 +151,7 @@ public class Player {
             currentWater = 0;
         }
 
-        System.out.println(name + " rested.");
+        System.out.println(name + " rested, good job brochaco!");
     }
 
     public void proposeTrade(Offer offer) {
@@ -138,35 +187,6 @@ public class Player {
 
     }
 
-    public void rejectTrade() {
-        System.out.println(name + " rejected the trade.");
-    }
-
-    public String getName() {
-        return name;
-
-    }
-
-    public int getCurrentFood() {
-        return currentFood;
-
-    }
-
-    public int getCurrentWater() {
-        return currentWater;
-
-    }
-
-    public int getCurrentGold() {
-        return currentGold;
-
-    }
-
-    public int getCurrentMovementPts() {
-        return movementPts;
-
-    }
-    
     public void addFood(int amount) {
         currentFood += amount;
         if (currentFood > maxFood) {
@@ -195,17 +215,23 @@ public class Player {
         System.out.println("Player: " + name);
         System.out.println("Food: " + currentFood + "/" + maxFood);
         System.out.println("Water: " + currentWater + "/" + maxWater);
+        System.out.println("Strength: " + currentStrength + "/" + maxStrength);
         System.out.println("Gold: " + currentGold);
+        System.out.println("Movement Points: " + movementPts);
         System.out.println("Position: (" + positionX + ", " + positionY + ")");
 
     }
 
     public Brain getBrain() {
-        // TODO Auto-generated method stub
+        
         return brain;
     }
 
     public int getPositionX() {
         return positionX;
+    }
+
+    public int getPositionY() {
+        return positionY;
     }
 }
