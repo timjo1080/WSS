@@ -16,5 +16,6 @@ public class Main {
             answer = scanner.next();
         }
         System.out.println("\n\nThank you for playing!");
+        scanner.close();
     }
 }
