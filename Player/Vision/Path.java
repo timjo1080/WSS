@@ -1,5 +1,6 @@
 package Player.Vision;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Path {
     private int movementCost;
@@ -21,7 +22,8 @@ public class Path {
 
     public ArrayList<Integer> totalCost() {
         // TODO
-        return null;
+        int totalCost = movementCost + waterCost + foodCost;
+        return new ArrayList<>(Arrays.asList(totalCost));
     }
 
     public int getMovementCost(){
@@ -33,6 +35,6 @@ public class Path {
     }
 
     public int getFoodCost(){
-        return movementCost;
+        return foodCost;
     }
 }
