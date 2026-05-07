@@ -19,6 +19,9 @@ public class Path {
     }
 
     public ArrayList<Integer> totalCost() {
+
+        //Calculates cost of each item in list 'costs'
+        //Example: if movementCost = 2, waterCost = 3, foodCost = 1, then costs will be [2, 3, 1]
         ArrayList<Integer> costs = new ArrayList<>();
         costs.add(movementCost);
         costs.add(waterCost);
