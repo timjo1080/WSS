@@ -26,6 +26,10 @@ public class Path {
         return costs;
     }
 
+    public int getTotalCost() {
+        return movementCost + waterCost + foodCost;
+    }
+
     public int getMovementCost(){
         return movementCost;
     }
