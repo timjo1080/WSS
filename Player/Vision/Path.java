@@ -15,13 +15,15 @@ public class Path {
     }
 
     public ArrayList<String> totalPath() {
-        // TODO
-        return null;
+        return moves;
     }
 
     public ArrayList<Integer> totalCost() {
-        // TODO
-        return null;
+        ArrayList<Integer> costs = new ArrayList<>();
+        costs.add(movementCost);
+        costs.add(waterCost);
+        costs.add(foodCost);
+        return costs;
     }
 
     public int getMovementCost(){
@@ -33,6 +35,6 @@ public class Path {
     }
 
     public int getFoodCost(){
-        return movementCost;
+        return foodCost;
     }
 }
