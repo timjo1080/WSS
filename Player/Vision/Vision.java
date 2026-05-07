@@ -9,12 +9,28 @@ import java.util.ArrayList;
 public class Vision {
     // Visible squares for the current turn.
     private final ArrayList<Square> visibility;
+    // Visibility radius for this vision type.
+    private final int radius;
     // Player square used as the origin for distance and path calculations.
     private Square currentSquare;
 
     public Vision() {
+        this(2);
+    }
+
+    public Vision(int radius) {
         this.visibility = new ArrayList<>();
+        this.radius = Math.max(0, radius);
         this.currentSquare = null;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    // Uses this vision type's configured radius.
+    public void updateVisibility(Map map, int currentX, int currentY) {
+        updateVisibility(map, currentX, currentY, getRadius());
     }
 
     // Rebuilds visibility using a box radius centered on (currentX, currentY).
