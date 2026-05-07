@@ -25,9 +25,15 @@ public class Map {
         return width;
     }
 
+// Getter for height Added
+    public int getHeight() {
+        return height;
+    }
+
+    // Added @ as a placeholder for player position and better visiability
     //methods
-    public void displayMap() {
-        // TODO
+    public void displayMap(int playerX, int playerY) {
+        
         if (map == null) {
             System.out.println("Map not initialized.");
             return;
@@ -35,8 +41,13 @@ public class Map {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (map[i][j] != null) {
+                if (j == playerX && i == playerY) {
+                    System.out.print("@ " );
+                    continue;    
+                }
+                else if (map[i][j] != null) {
                     System.out.print(map[i][j].getTerrain().getTerrainType().charAt(0) + " ");
+
                 } else {
                     System.out.print("? ");
                 }
@@ -140,6 +151,14 @@ public class Map {
             return null;
         }
         return map[y][x];
+    }
+
+    public Terrain getTerrainAt(int x, int y) {
+        Square square = getSquareAt(x, y);
+        if (square != null) {
+            return square.getTerrain();
+        }
+        return null;
     }
 
 }

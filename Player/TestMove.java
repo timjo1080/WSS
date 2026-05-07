@@ -18,10 +18,10 @@ public class TestMove {
         Player player = new Player(
             "Test Player", 100, 100, 100, 100, 100, 100, 100, vision, brain, 5, 0, 0);
 
-        player.move("right", 10, 10);
-        player.move("down", 10, 10);
-        player.move("left", 10, 10);
-        player.move("right", 10, 10);
+        player.move("right", 10, 10, 1, 1, 1);
+        player.move("down", 10, 10, 1, 1, 1);
+        player.move("left", 10, 10, 1, 1, 1);
+        player.move("right", 10, 10, 1, 1, 1);
 
         player.displayStatus();
 
