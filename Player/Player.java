@@ -71,6 +71,18 @@ public class Player {
         return currentStrength;
     }
 
+    public int getMaxFood() {
+        return maxFood;
+    }
+
+    public int getMaxWater() {
+        return maxWater;
+    }
+
+    public int getMaxStrength() {
+        return maxStrength;
+    }
+
 
     public void move(String direction, int mapWidth, int mapHeight, int movementCost, int waterCost, int foodCost) {
         if (movementPts <= 0) {
