@@ -30,6 +30,13 @@ public class Map {
         return height;
     }
 
+    public Square getSquare(int x, int y) {
+        if (!isValidCoordinate(x, y)) {
+            return null;
+        }
+        return map[y][x]; // Note: you correctly used [y][x] here!
+    }
+
     // Added @ as a placeholder for player position and better visiability
     //methods
     public void displayMap(int playerX, int playerY) {

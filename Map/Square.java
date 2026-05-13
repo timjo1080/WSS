@@ -41,16 +41,16 @@ public class Square {
     }
 
     public void applyItems(Player.Player player) {
-        ArrayList<Item> itemsToRemove = new ArrayList<>();
-
-        for (Item item : items) {
-            item.applyEffect(player, item, this);
-            if (!item.isRepeating()) {
-                itemsToRemove.add(item);
+        // starts backwards
+            for (int i = items.size() - 1; i >= 0; i--) {
+                Item item = items.get(i);
+                
+                item.applyEffect(player, item, this);
+                
+                if (!item.isRepeating()) {
+                    items.remove(i); 
             }
         }
-
-        items.removeAll(itemsToRemove);
     }
 
     public static int getGoldValue() {

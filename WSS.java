@@ -1,6 +1,19 @@
 import Map.Map;
+import Map.Square;
 import Player.Player;
+import Player.Brain.BalancedBrain;
+import Player.Brain.Brain;
+import Player.Brain.SpeedyBrain;
+import Player.Vision.CautiousVision;
+import Player.Vision.FarSightVision;
+import Player.Vision.FocusedVision;
+import Player.Vision.KeenEyedVision;
+import Player.Vision.Vision;
+
 import java.util.Scanner;
+
+import javax.swing.Box.Filler;
+
 import Items.Trader.*;
 import Map.Terrain;
 
@@ -37,7 +50,8 @@ public class WSS
     }
 
     //edit later to add vision and brain
-    public void initializePlayer(String difficulty) {
+    public void initializePlayer(String difficulty, Map map) {
+        Scanner scanner = new Scanner(System.in);
         int maxStrength = 100;
         int maxWater = 100;
         int maxFood = 100;
@@ -68,11 +82,84 @@ public class WSS
         }
 
 
+        System.out.println("\n------------------------------");
+        System.out.println("Choose your Vision:");
+        System.out.println("------------------------------\n");
+        System.out.println("  1. Cautious");
+        System.out.println("  2. FarSight");
+        System.out.println("  3. Focused");
+        System.out.println("  4. KeenEyed");
+        System.out.print("Enter choice (1-4): ");
+
+        int visionChoice = scanner.nextInt();
+
+        Vision vision = null;
+
+        switch (visionChoice) {
+            case 1:
+                vision = new CautiousVision();
+                System.out.println("\nVision set to Cautious!");
+                break;
+
+            case 2:
+                vision = new FarSightVision();
+                System.out.println("\nVision set to FarSight!");
+                break;
+
+            case 3:
+                vision = new FocusedVision();
+                System.out.println("\nVision set to Focused!");
+                break;
+
+            case 4:
+                vision = new KeenEyedVision();
+                System.out.println("\nVision set to KeenEyed!");
+                break;
+
+            default:
+                vision = new FocusedVision();
+                System.out.println("\nInvalid choice, defaulting to Focused.");
+        }
+
+        System.out.println("\n------------------------------");
+        System.out.println("Choose your Brain:");
+        System.out.println("------------------------------\n");
+        System.out.println("  1. Balanced");
+        System.out.println("  2. Speedy");
+        System.out.println("  3. filler");
+        System.out.print("Enter choice (1-3): ");
+
+        int brainChoice = scanner.nextInt();
+
+        Brain brain = null;
+
+        switch (brainChoice) {
+
+            case 1:
+                brain = new BalancedBrain(vision, map);
+                System.out.println("\nBrain set to Balanced!");
+                break;
+
+            case 2:
+                brain = new SpeedyBrain(vision, map);
+                System.out.println("\nBrain set to Speedy!");
+                break;
+
+            case 3:
+                // brain = new Filler(vision, map);
+                System.out.println("\nBrain set to Filler!");
+                break;
+
+            default:
+                brain = new BalancedBrain(vision, map);
+                System.out.println("\nInvalid choice, defaulting to Balanced.");
+        }
+
         // Can modify the position and movement points
         this.player = new Player(
         "Player", maxStrength, maxWater, maxFood, 
         currentStrength, currentWater, currentFood, currentGold,
-        null, null, 5, 4, 4);
+        vision, brain, 5, 0, 4); // make y position random
 
     }
 
@@ -111,6 +198,7 @@ public class WSS
         System.out.println("  3. Hard");
         System.out.print("Enter choice (1-3): ");
         int diffOption = scanner.nextInt();
+        scanner.nextLine();
 
         String difficulty = "Medium";
         switch (diffOption) {
@@ -134,11 +222,15 @@ public class WSS
         initializeMap(width, height, difficulty);
         map.createMap();
         System.out.println("Initalizing Player...\n\n");
-        initializePlayer(difficulty);
+        initializePlayer(difficulty, map);
 
         while(checkWinOrLose().equals("ongoing"))
         {
             displayStatus();
+            map.getSquare(player.getPositionX(),player.getPositionY()).applyItems(player);
+            System.out.println("\nPress ENTER to make your next move...");
+            scanner.nextLine(); // wait for user input
+
             makeNextMove();
         }
         if(checkWinOrLose().equals("win"))
@@ -152,43 +244,8 @@ public class WSS
 
     }
 
-    //placeholder for now
     public void makeNextMove()
     {
-        if (player.getBrain() == null) {
-            System.out.print("Enter move direction (up/down/left/right/stay):");
-            String direction = scanner.next().toLowerCase();
-
-            if (direction.equals("stay")){
-                player.rest();
-                return;
-            }
-            int newX = player.getPositionX();
-            int newY = player.getPositionY();
-
-            if (direction.equals("up")) {
-                newY -= 1;
-            } else if (direction.equals("down")) {
-                newY += 1;
-            } else if (direction.equals("left")) {
-                newX -= 1;
-            } else if (direction.equals("right")) {
-                newX += 1;
-            }
-            else{
-                System.out.println("Invalid direction brochaco.");
-                return;
-            }
-
-            Terrain terrain = map.getTerrainAt(newX, newY);
-
-            if (terrain == null) {
-                System.out.println("You cannot move off the map.");
-                return;
-            }
-            player.move(direction, map.getWidth(), map.getHeight(), terrain.getMovementCost(), terrain.getWaterCost(), terrain.getFoodCost());
-            return;
-        }
         player.getBrain().makeMove(player);
     }
 
@@ -198,10 +255,8 @@ public class WSS
         System.out.println("\n\n");
         player.displayStatus();
     
-
         Terrain terrain = map.getTerrainAt(player.getPositionX(), player.getPositionY());
         System.out.println("Current terrain: " + terrain.getTerrainType());        
-
     }
     
 

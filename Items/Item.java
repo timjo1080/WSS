@@ -22,13 +22,13 @@ public class Item {
     }
 
     public void applyEffect(Player player, Item item, Square square) {
-        if (name == "Food Pack") {
+        if (name.equals("Food Pack")) {
             player.addFood(Square.getFoodValue()); // Example effect: add 10 food to the player
         }
-        else if (name == "Water Pack") {
+        else if (name.equals("Water Pack")) {
             player.addWater(Square.getWaterValue()); // Example effect: add 10 water to the player
         }
-        else if (name == "Gold Pack") {
+        else if (name.equals("Gold Pack")) {
             player.addGold(Square.getGoldValue()); // Example effect: add 10 gold to the player
         }
         else {
@@ -36,7 +36,6 @@ public class Item {
         }
         
         if (!item.isRepeating()) {
-            square.removeItem(item);
             System.out.println(name + " is not a repeating item and has been used.");
         }
         else {
