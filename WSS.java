@@ -36,6 +36,7 @@ public class WSS
         this.map = new Map(width, height, difficulty);
     }
 
+    //edit later to add vision and brain
     public void initializePlayer(String difficulty) {
         int maxStrength = 100;
         int maxWater = 100;
@@ -151,6 +152,7 @@ public class WSS
 
     }
 
+    //placeholder for now
     public void makeNextMove()
     {
         if (player.getBrain() == null) {
@@ -205,15 +207,13 @@ public class WSS
 
     public String checkWinOrLose() {
         if (player.getPositionX() == map.getWidth() - 1) {
-        return "win";
+            return "win";
         }
         if (player.getCurrentStrength() <= 0 ||
             player.getCurrentWater() <= 0 ||
             player.getCurrentFood() <= 0) {
             return "lost";
-        
-            
         }
-        return "ongoing"; // placeholder (win, ongoing, lost)
+        return "ongoing";
     }
 }
