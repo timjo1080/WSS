@@ -235,8 +235,11 @@ public class Player {
     }
 
     public Brain getBrain() {
-        
         return brain;
+    }
+
+    public Vision getVision() {
+        return vision;
     }
 
     public int getPositionX() {

@@ -305,7 +305,7 @@ public class Vision {
             path.totalPath().add(horizontal);
         }
 
-        String vertical = dy >= 0 ? "up" : "down";
+        String vertical = dy >= 0 ? "down" : "up";
         for (int i = 0; i < Math.abs(dy); i++) {
             path.totalPath().add(vertical);
         }
