@@ -32,6 +32,9 @@ public class Item {
         else if (name.equals("Gold Pack")) {
             player.addGold(Square.getGoldValue()); // Example effect: add 10 gold to the player
         }
+        else if (item instanceof Items.Trader.Trader) {
+            //need to implement offer    
+        }
         else {
             System.out.println("Unknown item effect for " + name);
         }

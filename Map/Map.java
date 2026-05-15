@@ -129,6 +129,26 @@ public class Map {
                 } else if (itemChance < 30) {
                     map[i][j].addItem(new Items.WaterBonus("Water Pack", false, 10));
                 }
+
+
+                // random trader chance
+                int traderChance = rand.nextInt(100); 
+
+                if (traderChance < 25) {
+                    int traderType = rand.nextInt(3);
+
+                    switch (traderType) {
+                        case 0:
+                            map[i][j].addItem(new Items.Trader.AngryTrader("Angry Trader", false, 5, 0)); 
+                            break;
+                        case 1:
+                            map[i][j].addItem(new Items.Trader.GenerousTrader("Generous Trader", false, 3)); 
+                            break;
+                        case 2:
+                            map[i][j].addItem(new Items.Trader.StupidTrader("Stupid Trader", false)); 
+                            break;
+                    }
+                }
             }
         }
     }
