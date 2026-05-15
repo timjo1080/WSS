@@ -24,12 +24,12 @@ public class AngryTrader extends Trader {
     public Offer counterOffer(Offer offer) {
 //When angry requests more resources 
         return new Offer(
+            offer.getGoldRequested() - 2,
+            offer.getWaterRequested() - 2,
+            offer.getFoodRequested() - 2,
             offer.getGoldOffered(),
             offer.getWaterOffered(),
-            offer.getFoodOffered(),
-            offer.getGoldRequested() + 2,
-            offer.getWaterRequested() + 2,
-            offer.getFoodRequested() + 2
+            offer.getFoodOffered()
         );
     }
 

@@ -18,7 +18,7 @@ public class StupidTrader extends Trader {
      */
     public String think(){
         if (Math.random() < 0.5) {
-            return "accept";
+            return "accepts";
         } else {
             return "decline";
         }

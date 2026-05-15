@@ -44,14 +44,15 @@ public class Item {
             System.out.println("Unknown item effect for " + name);
         }
         
-        if (!item.isRepeating()) {
-            System.out.println(name + " is not a repeating item and has been used.");
+        if (!(item instanceof Items.Trader.Trader)) {
+            if (!item.isRepeating()) {
+                System.out.println(name + " is not a repeating item and has been used.");
+            }
+            else {
+                System.out.println(name + " is a repeating item and can be used again.");
+            }
+            System.out.println(name + " effect applied to " + player.getClass().getSimpleName());
         }
-        else {
-            System.out.println(name + " is a repeating item and can be used again.");
-        }
-
-        System.out.println(name + " effect applied to " + player.getClass().getSimpleName());
 
         System.out.println("\n==================================");
         player.displayStatus();
