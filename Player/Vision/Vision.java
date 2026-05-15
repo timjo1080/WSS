@@ -34,7 +34,7 @@ public class Vision {
     }
 
     // Rebuilds visibility using a box radius centered on (currentX, currentY).
-    // Box radius includes all map squares in [x-radius, x+radius] and [y-radius, y+radius].
+    // Subclasses can override isVisibleOffset(...) to use non-box shapes.
     public void updateVisibility(Map map, int currentX, int currentY, int radius) {
         visibility.clear();
         currentSquare = null;
@@ -57,6 +57,13 @@ public class Vision {
 
         for (int y = minY; y <= maxY; y++) {
             for (int x = minX; x <= maxX; x++) {
+                int dx = x - currentX;
+                int dy = y - currentY;
+
+                if (!isVisibleOffset(dx, dy, radius)) {
+                    continue;
+                }
+
                 if (!map.isValidCoordinate(x, y)) {
                     continue;
                 }
@@ -67,6 +74,11 @@ public class Vision {
                 }
             }
         }
+    }
+
+    // Default shape: box visibility.
+    protected boolean isVisibleOffset(int dx, int dy, int radius) {
+        return Math.abs(dx) <= radius && Math.abs(dy) <= radius;
     }
 
     public Path closestFood() {
@@ -99,6 +111,54 @@ public class Vision {
 
     public Path secondClosestTrader() {
         return nthClosestTraderPath(2);
+    }
+
+    // Fallback when no resource/trader path is available.
+    // Prefers eastward progress; otherwise uses the nearest visible tile.
+    public Path fallbackPath() {
+        if (visibility.isEmpty() || currentSquare == null) {
+            return null;
+        }
+
+        Square bestEast = null;
+        int bestEastDx = Integer.MIN_VALUE;
+        int bestEastDistance = Integer.MAX_VALUE;
+
+        Square bestAny = null;
+        int bestAnyDistance = Integer.MAX_VALUE;
+
+        int currentX = currentSquare.getPositionX();
+
+        for (Square square : visibility) {
+            if (square == null || isSameSquare(square, currentSquare)) {
+                continue;
+            }
+
+            int dx = square.getPositionX() - currentX;
+            int distance = manhattanDistance(currentSquare, square);
+
+            if (bestAny == null ||
+                distance < bestAnyDistance ||
+                (distance == bestAnyDistance && compareByCoordinate(square, bestAny) < 0)) {
+                bestAny = square;
+                bestAnyDistance = distance;
+            }
+
+            if (dx > 0) {
+                if (bestEast == null ||
+                    dx > bestEastDx ||
+                    (dx == bestEastDx && distance < bestEastDistance) ||
+                    (dx == bestEastDx && distance == bestEastDistance &&
+                        compareByCoordinate(square, bestEast) < 0)) {
+                    bestEast = square;
+                    bestEastDx = dx;
+                    bestEastDistance = distance;
+                }
+            }
+        }
+
+        Square target = bestEast != null ? bestEast : bestAny;
+        return buildPath(currentSquare, target);
     }
 
     public ArrayList<Square> getVisibility() {
@@ -208,6 +268,23 @@ public class Vision {
             return false;
         }
         return a.getPositionX() == b.getPositionX() && a.getPositionY() == b.getPositionY();
+    }
+
+    private int compareByCoordinate(Square a, Square b) {
+        if (a == null && b == null) {
+            return 0;
+        }
+        if (a == null) {
+            return 1;
+        }
+        if (b == null) {
+            return -1;
+        }
+
+        if (a.getPositionX() != b.getPositionX()) {
+            return Integer.compare(a.getPositionX(), b.getPositionX());
+        }
+        return Integer.compare(a.getPositionY(), b.getPositionY());
     }
 
     private Path buildPath(Square from, Square to) {

@@ -2,6 +2,7 @@ package Player.Vision;
 public class KeenEyedVision extends Vision {
 
     public KeenEyedVision() {
-        super(3);
+        // Balanced box vision.
+        super(2);
     }
 }
