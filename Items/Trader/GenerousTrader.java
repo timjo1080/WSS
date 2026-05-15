@@ -12,19 +12,19 @@ public class GenerousTrader extends Trader {
     }
 // Generosity Level directly affects the amount of resources reduced for trade
     public Offer counterOffer(Offer offer) {
-        int newGoldRequested = Math.max(0, offer.getGoldOffered() + generosityLevel);
-        int newWaterRequested = Math.max(0, offer.getWaterOffered() + generosityLevel);
-        int newFoodRequested = Math.max(0, offer.getFoodOffered() + generosityLevel);
+        int newGoldOffer = Math.max(0, offer.getGoldRequested() + generosityLevel);
+        int newWaterOffer = Math.max(0, offer.getWaterRequested() + generosityLevel);
+        int newFoodOffer = Math.max(0, offer.getFoodRequested() + generosityLevel);
 
 
 //new offered reduced by generosity level
         return new Offer(
-            offer.getGoldRequested(),
-            offer.getWaterRequested(),
-            offer.getFoodRequested(),
-            newGoldRequested,
-            newWaterRequested,
-            newFoodRequested
+            newGoldOffer,
+            newWaterOffer,
+            newFoodOffer,
+            offer.getGoldOffered(),     // these are what the player offered.
+            offer.getWaterOffered(),
+            offer.getFoodOffered()
 
         );
 
