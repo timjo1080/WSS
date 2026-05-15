@@ -88,8 +88,45 @@ public class Brain {
         }
     }
 
+    protected void addFallbackPath(ArrayList<Path> pathList){
+        Path tempPath;
+        tempPath = vision.fallbackPath();
+        if (tempPath != null) {
+            pathList.add(tempPath);
+        }
+    }
+
+    protected boolean canMoveNextStep(Player player, Path path, int food, int water, int movementPts) {
+        if (path == null || path.totalPath().isEmpty()) {
+            return false;
+        }
+        Terrain terrain = getNextTerrain(player, path);
+        return terrain != null && terrain.getMovementCost() <= movementPts && terrain.getWaterCost() <= water && terrain.getFoodCost() <= food;
+    }
+
     protected boolean isPossible(Path path, int currFood, int currWater, int currMovement){
         return (path.getMovementCost() <= currMovement) && (path.getFoodCost() <= currFood) && (path.getWaterCost() <= currWater);
     }
-    
+
+    protected Terrain getNextTerrain(Player player, Path path) {
+        if (path == null || path.totalPath().isEmpty()) {
+            return null;
+        }
+
+        String direction = path.totalPath().getFirst(); 
+        int newX = player.getPositionX();
+        int newY = player.getPositionY();
+
+        if (direction.equals("up")) {
+            newY -= 1;
+        } else if (direction.equals("down")) {
+            newY += 1;
+        } else if (direction.equals("left")) {
+            newX -= 1;
+        } else if (direction.equals("right")) {
+            newX += 1;
+        }
+
+        return map.getTerrainAt(newX, newY);
+    }
 }

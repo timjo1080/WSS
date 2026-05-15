@@ -4,6 +4,7 @@ import Player.Player;
 import Player.Brain.BalancedBrain;
 import Player.Brain.Brain;
 import Player.Brain.SpeedyBrain;
+import Player.Brain.TradingBrain;
 import Player.Vision.CautiousVision;
 import Player.Vision.FarSightVision;
 import Player.Vision.FocusedVision;
@@ -126,7 +127,7 @@ public class WSS
         System.out.println("------------------------------\n");
         System.out.println("  1. Balanced");
         System.out.println("  2. Speedy");
-        System.out.println("  3. filler");
+        System.out.println("  3. Trading");
         System.out.print("Enter choice (1-3): ");
 
         int brainChoice = scanner.nextInt();
@@ -146,8 +147,8 @@ public class WSS
                 break;
 
             case 3:
-                // brain = new Filler(vision, map);
-                System.out.println("\nBrain set to Filler!");
+                brain = new TradingBrain(vision, map);
+                System.out.println("\nBrain set to Trading!");
                 break;
 
             default:

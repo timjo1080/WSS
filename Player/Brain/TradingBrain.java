@@ -5,12 +5,12 @@ import Map.Terrain;
 import Player.Player;
 import Player.Vision.*;
 
-// BalancedBrain will prioritize moving east until resources are less than half
-// If low, will start looking for the nearest resource
-// If none nearby, will look for a trader to trade with
-public class BalancedBrain extends Brain {
+// TradingBrain will prioritize finding traders
+// If gold is below 15, will look for gold
+// If no traders are near, and stats are low, will start looking for items
+public class TradingBrain extends Brain {
     
-    public BalancedBrain(Vision vision, Map map) {
+    public TradingBrain(Vision vision, Map map) {
         super(vision, map);
     }
 
@@ -27,23 +27,23 @@ public class BalancedBrain extends Brain {
             pathList.clear();
 
             // Put exisiting resource paths in pathList to be reevaluated
-            // If all stats are good, attempt to move right
-            if (water >= 0.5*maxWater && food >= 0.5*maxFood) {
-                int newX = player.getPositionX() + 1;
-                Terrain terrain = map.getTerrainAt(newX, player.getPositionY());
-                
-                // Move right if player has enough movement points
-                if (terrain.getMovementCost() <= movementPts){
-                    player.move("right", map.getWidth(), map.getHeight(), terrain.getMovementCost(), terrain.getWaterCost(), terrain.getFoodCost());
-                    return;
-                }
-                else {
-                    player.rest();
-                    return;
-                }
+            // If all stats are good, look for traders
+            if (water >= 0.25*maxWater && food >= 0.25*maxFood && gold >=15) {
+                addTraderPaths(pathList);
+                addFallbackPath(pathList);
             }
-            // If both resources low, prioritize lowest        
-            else if(water < 0.5*maxWater && food < 0.5*maxFood){
+
+            // If stats good but gold is low, look for gold, or if none nearby, traders
+            else if(water >= 0.25*maxWater && food >= 0.25*maxFood && gold < 15){
+                addGoldPaths(pathList);
+                addTraderPaths(pathList);
+                addFallbackPath(pathList);
+            }
+            
+            // If both resources low, but gold is good, look for traders, and if none nearby, look for
+            // resources, prioritizing the lowest stat
+            else if(water < 0.25*maxWater && food < 0.25*maxFood && gold >=15){
+                addTraderPaths(pathList);
                 if(food < water){
                     addFoodPaths(pathList);
                     addWaterPaths(pathList);
@@ -52,39 +52,37 @@ public class BalancedBrain extends Brain {
                     addWaterPaths(pathList);
                     addFoodPaths(pathList);
                 }
-                
-                if(gold < 15){
-                    addGoldPaths(pathList);
-                }
-
-                addTraderPaths(pathList);
-                Path fallback = vision.fallbackPath();
-                if (fallback != null) {
-                    pathList.add(fallback);
-                }
+                addFallbackPath(pathList);
             }
 
-            // Only one of the stats is low
-            else{ 
+            // If only water or food is low (but not both), and gold is good, look for traders
+            // and if none nearby, look for the lowest resource item
+            else if((water < 0.25*maxWater || food < 0.25*maxFood) && gold >=15){
+                addTraderPaths(pathList);
                 // If water is low, prioritize water
-                if(water <= 0.5*maxWater) {
+                if(water < 0.25*maxWater) {
                     addWaterPaths(pathList);
                 }
-
                 // If food is low, prioritize food
-                else if(food <= 0.5*maxFood) {
+                else if(food < 0.25*maxFood) {
                     addFoodPaths(pathList);
                 }
+                addFallbackPath(pathList);
+            }
 
-                // If gold is low, get gold
-                if(gold < 15){
-                    addGoldPaths(pathList);
-                }
+            // If everything is low, look for gold first, then traders, then items
+            else if(water < 0.25*maxWater && food < 0.25*maxFood && gold < 15){
+                addGoldPaths(pathList);
                 addTraderPaths(pathList);
-                Path fallback = vision.fallbackPath();
-                if (fallback != null) {
-                pathList.add(fallback);
+                if(food < water){
+                    addFoodPaths(pathList);
+                    addWaterPaths(pathList);
                 }
+                else{
+                    addWaterPaths(pathList);
+                    addFoodPaths(pathList);
+                }
+                addFallbackPath(pathList);
             }
 
             // Iterate through the given paths, and pick the first possible path that has a square that can be moved into
