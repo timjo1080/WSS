@@ -118,19 +118,7 @@ public class TradingBrain extends Brain {
         // If possible path was found, move
         // Makes a single move, and then will reevaluate the possible paths from the new position
         String direction = viablePath.totalPath().removeFirst(); 
-        int newX = player.getPositionX();
-        int newY = player.getPositionY();
-
-        if (direction.equals("up")) {
-            newY -= 1;
-        } else if (direction.equals("down")) {
-            newY += 1;
-        } else if (direction.equals("left")) {
-            newX -= 1;
-        } else if (direction.equals("right")) {
-            newX += 1;
-        }
-
+        
         player.move(direction, map.getWidth(), map.getHeight(), nextTerrain.getMovementCost(), nextTerrain.getWaterCost(), nextTerrain.getFoodCost());
     }   
 

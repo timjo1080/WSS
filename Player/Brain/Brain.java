@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import Map.Map;
 import Map.Terrain;
 
+// Superclass for the subclasses
+// Containes methods that the subclasses can use
+// Brain subclasses responsible for determining the
+// player's next move automatically
 public class Brain {
     Vision vision;
     Map map;
@@ -18,24 +22,15 @@ public class Brain {
         this.map = map;
     }
 
-    // The default method does nothing, as each subclass has their own implementation that should be called instead
+    // The make move method for the Brain class throws an exception, since
+    // the subclasses should be implementing and overriding this method
+    // The player should not be using this default Brain, only the subclasses
     public void makeMove(Player player) {
-        int food = player.getCurrentFood();
-        int water = player.getCurrentWater();
-        int gold = player.getCurrentGold();
-        int movementPts = player.getCurrentMovementPts();
-
-        // Depending on brain type, prioritize certain options first. (EX. gluttonous brain will look for closest path to food, and take that)
-        // Also check stats to see if the move is possible with the given stats, and if not, choose a differrnt path
-        // Will call upon the brain's given vision to find the path 
-        //
-                
-        for (String move : viablePath.totalPath()){
-            player.move(move, map.getWidth(), map.getHeight(), 1, 1, 1 ); // Currently not sure how to get the width and height as it is right now
-        }
+        throw new UnsupportedOperationException();
     }
 
     // Protected methods for subclasses to use
+    // The following methods adds certain types of paths to the pathList
     protected void addWaterPaths(ArrayList<Path> pathList){
         Path tempPath;
         tempPath = vision.closestWater();
@@ -96,6 +91,7 @@ public class Brain {
         }
     }
 
+    // Checks if the player can actually perform the next move, based on their current stats
     protected boolean canMoveNextStep(Player player, Path path, int food, int water, int movementPts) {
         if (path == null || path.totalPath().isEmpty()) {
             return false;
@@ -104,10 +100,7 @@ public class Brain {
         return terrain != null && terrain.getMovementCost() <= movementPts && terrain.getWaterCost() <= water && terrain.getFoodCost() <= food;
     }
 
-    protected boolean isPossible(Path path, int currFood, int currWater, int currMovement){
-        return (path.getMovementCost() <= currMovement) && (path.getFoodCost() <= currFood) && (path.getWaterCost() <= currWater);
-    }
-
+    // Gets the next terrain that the player will be in if they move
     protected Terrain getNextTerrain(Player player, Path path) {
         if (path == null || path.totalPath().isEmpty()) {
             return null;
