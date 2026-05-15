@@ -246,6 +246,7 @@ public class WSS
 
     public void makeNextMove()
     {
+        player.getVision().updateVisibility(map, player.getPositionX(), player.getPositionY());
         player.getBrain().makeMove(player);
     }
 
