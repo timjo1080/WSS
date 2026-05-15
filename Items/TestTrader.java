@@ -29,7 +29,7 @@ public class TestTrader {
             0, 10, 0   
         );
 
-        player.proposeTrade(playerOffer);
+        System.out.println(player.getName() + " proposes: " + playerOffer);
 
         Offer counter = trader.counterOffer(playerOffer);
 
