@@ -163,7 +163,14 @@ public class WSS
 
     }
 
-    //methods
+    /**
+     * This Method Starts the Game.
+     * 1. Asks for Map Height & Width
+     * 2. Asks for Difficulty
+     * 3. Initalizes Map
+     * 4. Initalizes Player - asks for vision and brain
+     * 5. Loops the turns until game has won or lost
+     */
     public void startGame() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("=================================================");
@@ -172,7 +179,7 @@ public class WSS
         System.out.println();
         System.out.println("=================================================");
 
-        // setting map size
+        // setting map width
         System.out.print("\nEnter map width (Ex: 10): ");
         int width = scanner.nextInt();
         while (width <= 0) {
@@ -180,6 +187,7 @@ public class WSS
             width = scanner.nextInt();
         }
 
+        // setting map height
         System.out.print("Enter map height (Ex: 10): ");
         int height = scanner.nextInt();
         while (height <= 0) {
@@ -215,24 +223,35 @@ public class WSS
                 System.out.println("Set to Hard!");
                 break;
             default:
-                System.out.println("Invalid choice, defaulting to Medium.");
+                System.out.println("Invalid choice, defaulting to Medium."); // if bad input, set to medium
         }
         
+        // creates map object
         System.out.println("\nIntializing Map...");
         initializeMap(width, height, difficulty);
         map.createMap();
+
+        // creates player object
         System.out.println("Initalizing Player...\n\n");
         initializePlayer(difficulty, map);
 
+        // loops until player wins or loses
         while(checkWinOrLose().equals("ongoing"))
         {
+            // display map & player stats
             displayStatus();
+
+            // looks for items and changes stats accordingly
             map.getSquare(player.getPositionX(),player.getPositionY()).applyItems(player);
+            
+            // waits for user input
             System.out.println("\nPress ENTER to make your next move...");
-            scanner.nextLine(); // wait for user input
+            scanner.nextLine();
 
             makeNextMove();
         }
+
+        // if player wins then displays win text, if lost display lost text.
         if(checkWinOrLose().equals("win"))
         {
             System.out.println("The player got to the end!\n\n");
@@ -241,7 +260,6 @@ public class WSS
         {
             System.out.println("The player did not make it to the end.\n\n");
         }
-
     }
 
     public void makeNextMove()
