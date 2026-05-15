@@ -1,4 +1,7 @@
 package Items;
+import java.util.Scanner;
+
+import Items.Trader.Offer;
 import Map.Square;
 import Player.Player;
 
@@ -33,7 +36,39 @@ public class Item {
             player.addGold(Square.getGoldValue()); // Example effect: add 10 gold to the player
         }
         else if (item instanceof Items.Trader.Trader) {
-            //need to implement offer    
+            //need to implement offer
+            Scanner scanner = new Scanner(System.in);
+            
+            Items.Trader.Trader trader = (Items.Trader.Trader) item;
+            Offer playerOffer = new Offer(
+                5, 0, 2,  
+                0, 10, 0   
+            );
+            
+            player.proposeTrade(playerOffer);
+
+            Offer counter = trader.counterOffer(playerOffer);
+
+            if (counter == null) {
+                trader.declineOffer();
+                player.rejectTrade();
+            }
+            else {
+                System.out.println("Trader counters with: ");
+                System.out.println(counter);
+
+                System.out.println("Accept trade? (yes/no)");
+                String choice = scanner.nextLine();
+
+                if (choice.equalsIgnoreCase("yes") || choice.equalsIgnoreCase("y")) {
+                    trader.acceptOffer(counter);
+                    player.acceptTrade(counter);
+                }
+                else{
+                    trader.declineOffer();
+                    player.rejectTrade();
+                }
+            }
         }
         else {
             System.out.println("Unknown item effect for " + name);
@@ -47,5 +82,8 @@ public class Item {
         }
 
         System.out.println(name + " effect applied to " + player.getClass().getSimpleName());
+        System.out.println("\n==================================");
+        player.displayStatus();
+        System.out.println("==================================\n");
     }
 }
