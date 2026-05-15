@@ -22,6 +22,7 @@ public class Item {
     }
 
     public void applyEffect(Player player, Item item, Square square) {
+        System.out.println("\n");
         if (name.equals("Food Pack")) {
             player.addFood(Square.getFoodValue()); // Example effect: add 10 food to the player
         }
