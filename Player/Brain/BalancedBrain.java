@@ -5,7 +5,7 @@ import Map.Terrain;
 import Player.Player;
 import Player.Vision.*;
 
-// BalancedBrain will prioritize moving east until resources are less than half
+// BalancedBrain will prioritize moving east until resources are less than 50% of the max
 // If low, will start looking for the nearest resource
 // If none nearby, will look for a trader to trade with
 public class BalancedBrain extends Brain {
@@ -53,7 +53,7 @@ public class BalancedBrain extends Brain {
                     addFoodPaths(pathList);
                 }
                 
-                if(gold < 15){
+                if(gold < 10){
                     addGoldPaths(pathList);
                 }
 
@@ -77,7 +77,7 @@ public class BalancedBrain extends Brain {
                 }
 
                 // If gold is low, get gold
-                if(gold < 15){
+                if(gold < 10){
                     addGoldPaths(pathList);
                 }
                 addTraderPaths(pathList);
