@@ -7,7 +7,7 @@ import Player.Vision.*;
 
 // TradingBrain will prioritize finding traders
 // If gold is below 15, will look for gold
-// If no traders are near, and stats are low, will start looking for items
+// If no traders are near, and stats are low (less than 25% of the max), will start looking for items
 public class TradingBrain extends Brain {
     
     public TradingBrain(Vision vision, Map map) {

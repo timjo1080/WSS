@@ -5,7 +5,7 @@ import Map.Terrain;
 import Player.Player;
 import Player.Vision.*;
 
-// SpeedyBrain will prioritize moving east until resources are low
+// SpeedyBrain will prioritize moving east until resources are low (less than 20% of the max)
 // If low, will start looking for the nearest resource
 // If none nearby, will look for a trader to trade with
 public class SpeedyBrain extends Brain {
@@ -28,7 +28,7 @@ public class SpeedyBrain extends Brain {
 
             // Put exisiting resource paths in pathList to be reevaluated
             // If all stats are good, attempt to move right
-            if (water >= 0.25*maxWater && food >= 0.25*maxFood) {
+            if (water >= 0.20*maxWater && food >= 0.20*maxFood) {
                 int newX = player.getPositionX() + 1;
                 Terrain terrain = map.getTerrainAt(newX, player.getPositionY());
                 
@@ -43,7 +43,7 @@ public class SpeedyBrain extends Brain {
                 }
             }
             // If both resources low, prioritize lowest        
-            else if(water < 0.25*maxWater && food < 0.25*maxFood){
+            else if(water < 0.20*maxWater && food < 0.20*maxFood){
                 if(food < water){
                     addFoodPaths(pathList);
                     addWaterPaths(pathList);
@@ -53,7 +53,7 @@ public class SpeedyBrain extends Brain {
                     addFoodPaths(pathList);
                 }
                 
-                if(gold < 10){
+                if(gold < 5){
                     addGoldPaths(pathList);
                 }
                 addTraderPaths(pathList);
@@ -63,17 +63,17 @@ public class SpeedyBrain extends Brain {
             // Only one of the stats is low
             else{ 
                 // If water is low, prioritize water
-                if(water < 0.25*maxWater) {
+                if(water < 0.20*maxWater) {
                     addWaterPaths(pathList);
                 }
 
                 // If food is low, prioritize food
-                else if(food < 0.25*maxFood) {
+                else if(food < 0.20*maxFood) {
                     addFoodPaths(pathList);
                 }
 
                 // If gold is low, get gold
-                if(gold < 10){
+                if(gold < 5){
                     addGoldPaths(pathList);
                 }
                 addTraderPaths(pathList);
