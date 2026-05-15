@@ -1,5 +1,7 @@
 package Items.Trader;
 
+import Player.Player;
+
 public class AngryTrader extends Trader {
     private int counterLimit;
     private int currentCounter;
@@ -20,13 +22,6 @@ public class AngryTrader extends Trader {
     }
 
     public Offer counterOffer(Offer offer) {
-        currentCounter++;
-
-        if (shouldDecline()) {
-            declineOffer();
-            return null;
-
-        }
 //When angry requests more resources 
         return new Offer(
             offer.getGoldOffered(),
@@ -36,5 +31,59 @@ public class AngryTrader extends Trader {
             offer.getWaterRequested() + 2,
             offer.getFoodRequested() + 2
         );
+    }
+
+    public String think(Offer playerOffer)
+    {
+        currentCounter++;
+        if(currentCounter > counterLimit)
+        {
+            return "decline";
+        }
+        else if(playerOffer.getGoldRequested() < 3 && playerOffer.getFoodRequested() < 3 && playerOffer.getWaterRequested() < 3)
+        {
+            return "accepts";
+        }
+        else
+        {
+            return "counter";
+        }
+    }
+
+    public void trading(Player player)
+    {
+        currentCounter = 0;
+        while(true)
+        {
+            Offer playerOffer = player.proposeTrade(); // player enters their proposed trade
+
+            String traderResponse = think(playerOffer); // trader either accepts, declines, counters
+            if(traderResponse.equals("accepts"))
+            {
+                acceptOffer(playerOffer);
+                break;
+            }
+            else if(traderResponse.equals("decline"))
+            {
+                declineOffer();
+                break;
+            }
+
+            System.out.println("Trader Counters your Offer With:");
+            Offer counterOffer = counterOffer(playerOffer);
+            System.out.println(counterOffer);
+
+            String playerResponse = player.think(); // player either accepts, declines, counters
+            if(playerResponse.equals("accepts"))
+            {
+                player.acceptTrade(counterOffer);
+                break;
+            }
+            else if(playerResponse.equals("decline"))
+            {
+                player.declineTrade();
+                break;
+            }
+        }
     }
 }

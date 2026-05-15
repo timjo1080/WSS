@@ -139,7 +139,7 @@ public class Map {
 
                     switch (traderType) {
                         case 0:
-                            map[i][j].addItem(new Items.Trader.AngryTrader("Angry Trader", false, 5, 0)); 
+                            map[i][j].addItem(new Items.Trader.AngryTrader("Angry Trader", false, 2, 0)); 
                             break;
                         case 1:
                             map[i][j].addItem(new Items.Trader.GenerousTrader("Generous Trader", false, 3)); 

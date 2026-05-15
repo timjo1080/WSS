@@ -1,4 +1,6 @@
 package Player;
+import java.util.Scanner;
+
 import Items.Trader.Offer;
 import Player.Brain.Brain;
 import Player.Vision.Vision;
@@ -166,9 +168,59 @@ public class Player {
         System.out.println(name + " rested, good job brochaco!");
     }
 
-    public void proposeTrade(Offer offer) {
-        System.out.println(name + " proposes a trade: ");
-        System.out.println(offer);
+    /**
+     * asks the user if they want to accept, decline, or counter the trade
+     * @return
+     */
+    public String think()
+    {
+        System.out.println("");
+        System.out.println("What do you want to do?");
+        System.out.println("1. Accept");
+        System.out.println("2. Decline");
+        System.out.println("3. Counter");
+        System.out.print("Choice: ");
+        
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+        
+        
+        switch (choice) {
+            case 1:
+                return "accepts";
+            case 2:
+                return "decline";
+            case 3:
+                return "counter";
+            default:
+                System.out.println("Invalid choice, you decline the offer.");
+                return "decline";
+
+        }
+    }
+
+    public Offer proposeTrade() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("----------------------------");
+        System.out.println("Player proposes a trade.");
+        System.out.println("----------------------------\n");
+        
+        System.out.println("What are you offering?");
+        System.out.print("Gold: ");  int giveGold  = scanner.nextInt();
+        System.out.print("Water: "); int giveWater = scanner.nextInt();
+        System.out.print("Food: ");  int giveFood  = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("What do you want in return?");
+        System.out.print("Gold: ");  int wantGold  = scanner.nextInt();
+        System.out.print("Water: "); int wantWater = scanner.nextInt();
+        System.out.print("Food: ");  int wantFood  = scanner.nextInt();
+        scanner.nextLine();
+
+        Offer offer = new Offer(giveGold, giveWater, giveFood, wantGold, wantWater, wantFood);
+        System.out.println(name + " proposes: " + offer + "\n");
+        return offer;
     }
 
     public void acceptTrade(Offer offer) {
@@ -197,6 +249,11 @@ public class Player {
 
         System.out.println(name + " accepted the trade.");
 
+    }
+
+    public void declineTrade()
+    {
+        System.out.println(name + " declined the trade.");
     }
 
     public void addFood(int amount) {
